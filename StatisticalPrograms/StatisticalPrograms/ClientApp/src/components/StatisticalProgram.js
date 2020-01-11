@@ -6,7 +6,7 @@ export class StatisticalProgram extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { statisticalPrograms: [], loading: true, counter: 1, itemName: "", itemValue: "hello"  };
+        this.state = { statisticalPrograms: [], loading: true, counter: 1, itemName: "", itemValue: "" };
         this.delete = this.delete.bind(this);
         this.add = this.add.bind(this);
         this.renderStatisticalProgramTable = this.renderStatisticalProgramTable.bind(this);
@@ -43,10 +43,10 @@ export class StatisticalProgram extends Component {
                             )}
                             <tr>
                                 <td></td>
-                                <td><input type="text" name="itemName" value={this.state.itemName} onChange={this.handleInputChange}/></td>
-                                <td><input type="text" name="itemValue" value={this.state.itemValue} onChange={this.handleInputChange}/></td>
+                                <td><input type="text" name="itemName" value={this.state.itemName} onChange={this.handleInputChange} /></td>
+                                <td><input type="text" name="itemValue" value={this.state.itemValue} onChange={this.handleInputChange} /></td>
                                 <td></td>
-                                <td><button className="btn btn-primary" onClick={() => this.add()}>Add</button></td>
+                                <td><button className="btn btn-primary" onClick={() => this.handleSubmit}>Add</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -59,7 +59,6 @@ export class StatisticalProgram extends Component {
     }
 
     handleInputChange(event) {
-        // alert('somthing happened! ' +event.target.value);
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
@@ -67,8 +66,6 @@ export class StatisticalProgram extends Component {
         this.setState({
             [name]: value
         });
-
-        console.log('input');
     }
 
     render() {
@@ -90,9 +87,9 @@ export class StatisticalProgram extends Component {
     }
 
     handleSubmit(event) {
-        alert('Your favorite flavor is: ' + this.state.itemName +' => value: ' +this.state.it);
+        alert('Updating: ' + this.state.itemName + ' => value: ' + this.state.it);
         event.preventDefault();
-      }
+    }
 
     async populateStatisticalPrograms() {
         const response = await fetch('api/statisticalProgram');
@@ -103,10 +100,10 @@ export class StatisticalProgram extends Component {
     async delete(id) {
         let action = 'api/statisticalProgram/' + id;
         const response = await fetch(action, { method: 'DELETE' });
-        console.log(response.status)
         if (response.status === '202') {
-            console.log('whiip')
+            //delete ok
         }
+
         this.setState({
             statisticalPrograms: this.state.statisticalPrograms.filter(el => el.id !== id)
         });
